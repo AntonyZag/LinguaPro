@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+/* Hover en tarjetas de Historia, Misión, Visión y Cursos */
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.card:hover {
+  transform: translateY(-7px) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Hover con zoom en fotos de docentes */
+#docentes .card img {
+  transition: transform 0.3s ease !important;
+}
+
+#docentes .card:hover img {
+  transform: scale(1.08) !important;
+}
