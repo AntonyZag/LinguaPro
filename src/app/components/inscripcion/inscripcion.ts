@@ -11,13 +11,11 @@ import Swal from 'sweetalert2';
   templateUrl: './inscripcion.html',
   styleUrl: './inscripcion.css'
 })
-export class InscripcionComponent {
+export class Inscripcion {
   private linguaService = inject(LinguaproService);
 
-  // Señal de inscripciones consumida desde el servicio
   inscripciones = this.linguaService.inscripciones;
 
-  // Modelo temporal para el formulario
   formData = {
     nombres: '',
     apellidos: '',
@@ -38,7 +36,6 @@ export class InscripcionComponent {
       return;
     }
 
-    // Agregar al Signal del servicio
     this.linguaService.agregarInscripcion({
       nombres: this.formData.nombres.trim(),
       apellidos: this.formData.apellidos.trim(),
@@ -51,12 +48,11 @@ export class InscripcionComponent {
     Swal.fire({
       icon: 'success',
       title: '¡Inscripción Exitosa!',
-      text: `El registro de ${this.formData.nombres} ha sido guardado en el sistema.`,
+      text: `El registro de ${this.formData.nombres} ha sido guardado.`,
       confirmButtonColor: '#198754',
       timer: 2500
     });
 
-    // Resetear formulario
     form.resetForm();
     this.formData = {
       nombres: '',
