@@ -1,9 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LinguaproService } from '../../services/linguapro';
 
 @Component({
-  imports: [],
   selector: 'app-catalogo',
-  styleUrl: './catalogo.css',
+  standalone: true,
+  imports: [],
   templateUrl: './catalogo.html',
+  styleUrl: './catalogo.css'
 })
-export class Catalogo {}
+export class CatalogoComponent {
+  private linguaService = inject(LinguaproService);
+
+  // Señales consumidas desde el servicio
+  cursos = this.linguaService.cursos;
+  docentes = this.linguaService.docentes;
+  promociones = this.linguaService.promociones;
+  resenas = this.linguaService.resenas;
+}

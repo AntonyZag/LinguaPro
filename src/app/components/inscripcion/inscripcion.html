@@ -1,1 +1,135 @@
-<p>inscripcion works!</p>
+<section id="registro" class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Formulario de Entrada -->
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-sm p-4 rounded-4">
+          <h3 class="fw-bold text-primary mb-2">Formulario de Registro</h3>
+          <p class="text-muted small mb-4">Ingresa tus datos para preinscribirte en el curso seleccionado.</p>
+
+          <form #f="ngForm" (ngSubmit)="guardarInscripcion(f)" novalidate>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Nombres <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="nombres" [(ngModel)]="formData.nombres" required minlength="3" placeholder="Ej. Carlos" #nombresCtrl="ngModel">
+              @if (nombresCtrl.invalid && nombresCtrl.touched) {
+                <div class="text-danger small mt-1">El nombre es obligatorio (mínimo 3 letras).</div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Apellidos <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="apellidos" [(ngModel)]="formData.apellidos" required minlength="3" placeholder="Ej. Ramos" #apellidosCtrl="ngModel">
+              @if (apellidosCtrl.invalid && apellidosCtrl.touched) {
+                <div class="text-danger small mt-1">El apellido es obligatorio.</div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Correo Electrónico <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" name="correo" [(ngModel)]="formData.correo" required email placeholder="carlos@correo.com" #correoCtrl="ngModel">
+              @if (correoCtrl.invalid && correoCtrl.touched) {
+                <div class="text-danger small mt-1">Ingrese un correo válido.</div>
+              }
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Teléfono Celular <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" name="telefono" [(ngModel)]="formData.telefono" required pattern="^[0-9]{9}$" placeholder="987654321" #telCtrl="ngModel">
+              @if (telCtrl.invalid && telCtrl.touched) {
+                <div class="text-danger small mt-1">Debe tener exactamente 9 dígitos.</div>
+              }
+            </div>
+
+            <div class="row g-2 mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Idioma <span class="text-danger">*</span></label>
+                <select class="form-select" name="idiomaInteres" [(ngModel)]="formData.idiomaInteres" required #idiomaCtrl="ngModel">
+                  <option value="" disabled selected>Seleccione...</option>
+                  <option value="Inglés">Inglés</option>
+                  <option value="Portugués">Portugués</option>
+                  <option value="Francés">Francés</option>
+                  <option value="Italiano">Italiano</option>
+                  <option value="Alemán">Alemán</option>
+                  <option value="Quechua">Quechua</option>
+                </select>
+                @if (idiomaCtrl.invalid && idiomaCtrl.touched) {
+                  <div class="text-danger small mt-1">Seleccione idioma.</div>
+                }
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Nivel <span class="text-danger">*</span></label>
+                <select class="form-select" name="nivel" [(ngModel)]="formData.nivel" required #nivelCtrl="ngModel">
+                  <option value="" disabled selected>Seleccione...</option>
+                  <option value="Básico">Básico</option>
+                  <option value="Intermedio">Intermedio</option>
+                  <option value="Avanzado">Avanzado</option>
+                </select>
+                @if (nivelCtrl.invalid && nivelCtrl.touched) {
+                  <div class="text-danger small mt-1">Seleccione nivel.</div>
+                }
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2 shadow-sm" [disabled]="f.invalid">
+              <i class="bi bi-person-check-fill me-1"></i> Guardar Inscripción
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabla en Vivo (Almacena y Muestra) -->
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold text-dark mb-0">Estudiantes Registrados</h4>
+            <span class="badge bg-primary fs-6">{{ inscripciones().length }} registros</span>
+          </div>
+          <p class="text-muted small">Datos actualizados en tiempo real mediante Angular Signals:</p>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle border">
+              <thead class="table-light">
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Contacto</th>
+                  <th>Idioma</th>
+                  <th>Fecha</th>
+                  <th class="text-center">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of inscripciones(); track item.id) {
+                  <tr>
+                    <td>
+                      <div class="fw-bold">{{ item.nombres }} {{ item.apellidos }}</div>
+                      <small class="text-muted"><i class="bi bi-award-fill text-warning me-1"></i>Nivel: {{ item.nivel }}</small>
+                    </td>
+                    <td>
+                      <div class="small"><i class="bi bi-envelope me-1"></i>{{ item.correo }}</div>
+                      <div class="small text-muted"><i class="bi bi-telephone me-1"></i>{{ item.telefono }}</div>
+                    </td>
+                    <td>
+                      <span class="badge bg-primary-subtle text-primary border border-primary-subtle">{{ item.idiomaInteres }}</span>
+                    </td>
+                    <td class="small text-muted">{{ item.fechaRegistro }}</td>
+                    <td class="text-center">
+                      <button class="btn btn-outline-danger btn-sm" (click)="eliminar(item.id, item.nombres)" title="Eliminar registro">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                      No hay registros disponibles.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
