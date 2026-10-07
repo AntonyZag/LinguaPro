@@ -1,18 +1,77 @@
-/* Hover en tarjetas de Historia, Misión, Visión y Cursos */
+/* ===================================================
+   PALETA PERSONALIZADA (Sobrescribe Bootstrap)
+   =================================================== */
+:root {
+  /* Color principal (Navbar, títulos, botones principales) */
+  --bs-primary: #1e3a8a;
+  --bs-primary-rgb: 30, 58, 138;
+
+  /* Fondo general suave */
+  --bs-body-bg: #f8fafc;
+  --bs-body-color: #0f172a;
+
+  /* Color de fondo para secciones alternadas */
+  --bs-light: #f1f5f9;
+  --bs-light-rgb: 241, 245, 249;
+
+  /* Color secundario / Acento */
+  --bs-warning: #f59e0b;
+  --bs-warning-rgb: 245, 158, 11;
+}
+
+/* Suavizado general */
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Estilo del Hero Header superior con degradado personalizado */
+header.bg-primary {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%) !important;
+}
+
+/* Navbar moderno oscuro con borde sutil */
+nav.navbar {
+  background-color: #0f172a !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================================
+   TARJETAS Y EFECTOS HOVER
+   =================================================== */
 .card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  background-color: #ffffff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
 }
 
+/* Elevación al pasar el mouse */
 .card:hover {
-  transform: translateY(-7px) !important;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-6px) !important;
+  box-shadow: 0 14px 28px rgba(30, 58, 138, 0.12) !important;
+  border-color: #93c5fd !important;
 }
 
-/* Hover con zoom en fotos de docentes */
+/* Hover específico en fotos de la plana docente */
 #docentes .card img {
-  transition: transform 0.3s ease !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  border: 3px solid #e2e8f0;
 }
 
 #docentes .card:hover img {
   transform: scale(1.08) !important;
+  border-color: #1e3a8a;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Botones refinados */
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
 }
